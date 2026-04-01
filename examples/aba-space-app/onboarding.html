@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ABA Space — Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #87cefa;
+    --blue-light: #c2e8fd;
+    --blue-dark: #5ab8f8;
+    --black: #000000;
+    --gray: #72716d;
+    --gray-light: #a8a7a3;
+    --gray-pale: #e4e3e0;
+    --off-white: #f8f8f7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #ddf0fc;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--black);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .phone-frame {
+    width: 390px;
+    min-height: 844px;
+    background: var(--off-white);
+    border-radius: 48px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.22), 0 0 0 8px #0a0a0a, 0 0 0 11px #1a1a1a;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--black);
+    color: white;
+    padding: 12px 28px 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; font-weight: 500;
+    flex-shrink: 0;
+  }
+  .status-bar .time { font-weight: 700; font-size: 13px; }
+  .status-icons { display: flex; gap: 5px; align-items: center; font-size: 10px; }
+
+  /* Scroll content */
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 120px;
+  }
+  .scroll-content::-webkit-scrollbar { display: none; }
+
+  /* Hero header */
+  .hero {
+    background: var(--black);
+    padding: 32px 28px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -40px;
+    width: 220px; height: 220px;
+    background: var(--blue); border-radius: 50%; opacity: 0.10;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: -20px;
+    width: 160px; height: 160px;
+    background: var(--blue); border-radius: 50%; opacity: 0.07;
+  }
+
+  .logo-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px; position: relative; z-index: 1;
+  }
+
+  .logo-mark {
+    width: 40px; height: 40px; background: var(--blue);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    color: var(--black); font-size: 20px;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white); font-size: 19px;
+  }
+  .logo-text span { color: var(--blue); }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-size: 11px; color: var(--blue);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white); font-size: 28px;
+    line-height: 1.25; margin-bottom: 10px;
+  }
+
+  .hero-title em {
+    color: var(--blue); font-style: normal;
+  }
+
+  .hero-sub {
+    font-size: 13px; color: var(--gray-light);
+    line-height: 1.6; font-weight: 400;
+  }
+
+  /* Progress dots */
+  .progress-dots {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 20px 0 4px;
+  }
+
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gray-pale);
+    transition: all 0.3s;
+  }
+  .dot.active { background: var(--blue); width: 22px; border-radius: 4px; }
+
+  /* Section */
+  .onboard-section {
+    padding: 20px 20px 0;
+  }
+
+  .section-eyebrow {
+    font-size: 10px; color: var(--blue);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 4px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  .section-sub {
+    font-size: 12px; color: var(--gray);
+    line-height: 1.5; margin-bottom: 18px;
+  }
+
+  /* Role cards */
+  .role-cards { display: flex; flex-direction: column; gap: 10px; }
+
+  .role-card {
+    background: var(--white);
+    border: 2px solid var(--gray-pale);
+    border-radius: 20px;
+    padding: 18px 20px;
+    display: flex; align-items: center; gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .role-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 18px;
+  }
+
+  .role-card.selected {
+    border-color: var(--blue);
+    box-shadow: 0 4px 20px rgba(135,206,250,0.25);
+  }
+
+  .role-card.selected::before { opacity: 0.06; }
+
+  .role-icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+    transition: all 0.2s;
+  }
+
+  .role-card.rbt .role-icon-wrap { background: rgba(135,206,250,0.15); }
+  .role-card.bcaba .role-icon-wrap { background: rgba(114,113,109,0.12); }
+  .role-card.bcba .role-icon-wrap { background: rgba(0,0,0,0.06); }
+  .role-card.selected .role-icon-wrap { background: var(--blue); }
+
+  .role-text { flex: 1; position: relative; z-index: 1; }
+
+  .role-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px; color: var(--black);
+    margin-bottom: 2px;
+  }
+
+  .role-desc {
+    font-size: 11px; color: var(--gray);
+    line-height: 1.4;
+  }
+
+  .role-check {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+
+  .role-card.selected .role-check {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--black);
+  }
+
+  .role-badge {
+    position: absolute; top: 14px; right: 46px;
+    background: var(--black); color: var(--blue);
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 0.06em; padding: 2px 8px;
+    border-radius: 8px; z-index: 1;
+  }
+
+  /* Supervision question */
+  .supervision-section {
+    padding: 20px 20px 0;
+  }
+
+  .supervision-card {
+    background: var(--black);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1.5px solid rgba(135,206,250,0.2);
+    position: relative; overflow: hidden;
+  }
+
+  .supervision-card::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    background: var(--blue); border-radius: 50%; opacity: 0.08;
+  }
+
+  .supervision-label {
+    font-size: 10px; color: var(--blue);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 6px;
+  }
+
+  .supervision-question {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white); font-size: 16px;
+    line-height: 1.35; margin-bottom: 16px;
+  }
+
+  .supervision-options {
+    display: flex; gap: 8px;
+  }
+
+  .supervision-btn {
+    flex: 1; padding: 10px;
+    border-radius: 12px; border: 1.5px solid rgba(135,206,250,0.2);
+    background: transparent;
+    color: var(--gray-light);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .supervision-btn.selected {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--black);
+  }
+
+  /* Exam status */
+  .exam-section {
+    padding: 16px 20px 0;
+  }
+
+  .exam-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1.5px solid var(--gray-pale);
+  }
+
+  .exam-label {
+    font-size: 10px; color: var(--gray);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 6px;
+  }
+
+  .exam-question {
+    font-family: 'DM Serif Display', serif;
+    color: var(--black); font-size: 16px;
+    line-height: 1.35; margin-bottom: 14px;
+  }
+
+  .exam-options { display: flex; flex-direction: column; gap: 8px; }
+
+  .exam-opt {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--gray-pale);
+    background: var(--off-white);
+    font-size: 12px; font-weight: 500;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .exam-opt-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--gray-pale);
+    flex-shrink: 0; transition: all 0.2s;
+  }
+
+  .exam-opt.selected {
+    border-color: var(--blue);
+    background: rgba(135,206,250,0.08);
+    color: var(--black);
+  }
+
+  .exam-opt.selected .exam-opt-dot {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+
+  /* Date input */
+  .date-input-wrap {
+    margin-top: 12px;
+    display: none;
+  }
+
+  .date-input-wrap.visible { display: block; }
+
+  .date-label {
+    font-size: 11px; font-weight: 600; color: var(--gray);
+    margin-bottom: 6px; letter-spacing: 0.03em;
+  }
+
+  .date-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--blue);
+    background: rgba(135,206,250,0.06);
+    font-size: 13px; font-weight: 500;
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+  }
+
+  /* CTA button */
+  .cta-wrap {
+    position: fixed;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 390px;
+    padding: 16px 20px 32px;
+    background: linear-gradient(to top, var(--off-white) 70%, transparent);
+    z-index: 20;
+  }
+
+  .cta-btn {
+    width: 100%;
+    padding: 17px;
+    background: var(--black);
+    color: var(--white);
+    border: none; border-radius: 18px;
+    font-size: 15px; font-weight: 700;
+    font-family: 'DM Serif Display', serif;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border: 2px solid rgba(135,206,250,0.2);
+  }
+
+  .cta-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,0.25); }
+  .cta-btn:active { transform: scale(0.98); }
+
+  .cta-btn .arrow {
+    background: var(--blue); color: var(--black);
+    width: 24px; height: 24px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900;
+  }
+
+  .skip-link {
+    text-align: center; margin-top: 10px;
+    font-size: 11px; color: var(--gray-light);
+    cursor: pointer; font-weight: 500;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.4s ease 0.05s both; }
+  .onboard-section { animation: fadeUp 0.4s ease 0.15s both; }
+  .supervision-section { animation: fadeUp 0.4s ease 0.22s both; }
+  .exam-section { animation: fadeUp 0.4s ease 0.28s both; }
+
+  .spacer { height: 16px; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <div class="status-icons"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="scroll-content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="logo-row">
+        <div class="logo-mark">A</div>
+        <div class="logo-text">The <span>ABA</span> Space</div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Welcome</div>
+        <div class="hero-title">Let's personalize<br>your <em>ABA Space</em></div>
+        <div class="hero-sub">Tell us about yourself so we can build the right experience for where you are in your journey.</div>
+      </div>
+    </div>
+
+    <!-- Progress dots -->
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Role Selection -->
+    <div class="onboard-section">
+      <div class="section-eyebrow">Step 1 of 4</div>
+      <div class="section-title">Who are you?</div>
+      <div class="section-sub">Select the role that best describes you right now. You can always change this later.</div>
+
+      <div class="role-cards">
+
+        <!-- RBT -->
+        <div class="role-card rbt" onclick="selectRole(this)">
+          <div class="role-icon-wrap">📗</div>
+          <div class="role-text">
+            <div class="role-name">RBT</div>
+            <div class="role-desc">Registered Behavior Technician — preparing for or recently passed the RBT exam</div>
+          </div>
+          <div class="role-check">✓</div>
+        </div>
+
+        <!-- BCaBA -->
+        <div class="role-card bcaba" onclick="selectRole(this)">
+          <div class="role-icon-wrap">📘</div>
+          <div class="role-badge">PRO</div>
+          <div class="role-text">
+            <div class="role-name">BCaBA / QASP-S</div>
+            <div class="role-desc">Board Certified Assistant Behavior Analyst — exam candidate or credentialed</div>
+          </div>
+          <div class="role-check">✓</div>
+        </div>
+
+        <!-- BCBA -->
+        <div class="role-card bcba" onclick="selectRole(this)">
+          <div class="role-icon-wrap">📕</div>
+          <div class="role-badge">PRO</div>
+          <div class="role-text">
+            <div class="role-name">BCBA / QABA</div>
+            <div class="role-desc">Board Certified Behavior Analyst — exam candidate or credentialed practitioner</div>
+          </div>
+          <div class="role-check">✓</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Supervision Question -->
+    <div class="supervision-section">
+      <div class="supervision-card">
+        <div class="supervision-label">Quick question</div>
+        <div class="supervision-question">Are you currently collecting supervision hours?</div>
+        <div class="supervision-options">
+          <button class="supervision-btn" onclick="selectSupervision(this)">Yes</button>
+          <button class="supervision-btn" onclick="selectSupervision(this)">No</button>
+          <button class="supervision-btn" onclick="selectSupervision(this)">Not yet</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Exam Status -->
+    <div class="exam-section">
+      <div class="exam-card">
+        <div class="exam-label">Exam status</div>
+        <div class="exam-question">Are you currently preparing for an exam?</div>
+        <div class="exam-options">
+
+          <div class="exam-opt" onclick="selectExam(this, true)">
+            <div class="exam-opt-dot"></div>
+            Yes — I have an exam date scheduled
+          </div>
+
+          <div class="exam-opt" onclick="selectExam(this, true)">
+            <div class="exam-opt-dot"></div>
+            Yes — but I haven't scheduled it yet
+          </div>
+
+          <div class="exam-opt" onclick="selectExam(this, false)">
+            <div class="exam-opt-dot"></div>
+            No — I am already credentialed
+          </div>
+
+          <div class="exam-opt" onclick="selectExam(this, false)">
+            <div class="exam-opt-dot"></div>
+            Not sure yet
+          </div>
+
+        </div>
+
+        <!-- Exam date input — shown if user selects yes with a date -->
+        <div class="date-input-wrap" id="dateWrap">
+          <div class="date-label">When is your exam?</div>
+          <input class="date-input" type="date" id="examDate" />
+        </div>
+
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <button class="cta-btn" onclick="nextStep()">
+      Continue to Study Schedule
+      <span class="arrow">→</span>
+    </button>
+    <div class="skip-link">Set up later</div>
+  </div>
+
+</div>
+
+<script>
+  function selectRole(card) {
+    document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  }
+
+  function selectSupervision(btn) {
+    document.querySelectorAll('.supervision-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function selectExam(opt, showDate) {
+    document.querySelectorAll('.exam-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    const dateWrap = document.getElementById('dateWrap');
+    if (showDate) {
+      dateWrap.classList.add('visible');
+    } else {
+      dateWrap.classList.remove('visible');
+    }
+  }
+
+  function nextStep() {
+    alert('Next step: Study Schedule setup — build this screen next in Claude!');
+  }
+</script>
+
+</body>
+</html>
